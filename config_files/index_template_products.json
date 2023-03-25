@@ -1,0 +1,18 @@
+{
+  "index_patterns": ["products-*"],
+  "priority": 10,
+  "template": {
+    "mappings": {
+      "properties": {
+        "brand": {
+          "type": "keyword"
+        }
+      }
+    }
+  },
+  "composed_of": [
+    "jc_settings",
+    "jc_dynamic_template"
+  ],
+  "version": 1
+}
