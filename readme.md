@@ -21,6 +21,14 @@ You can test using curl, for now we do not check the certificate:
 curl https://localhost:9200 -ku admin:admin
 ```
 
+# Dagster
+
+I am experimenting with Dagster
+
+```
+dagster dev -f ./pipeline/products-dagster.py
+```
+
 # References
 Just some articles I used
 

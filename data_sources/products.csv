@@ -1,0 +1,51 @@
+id,name,description,price,category,color,create_date
+1,Red T-shirt,"A comfortable and stylish red t-shirt made of cotton",15.99,T-shirts,Red,2022-01-01
+2,Blue Dress,"A beautiful blue dress with floral pattern and chiffon fabric",49.99,Dresses,Blue,2022-01-02
+3,Green Hoodie,"A cozy green hoodie made of soft fleece material",34.99,Hoodies,Green,2022-01-03
+4,Yellow Raincoat,"A bright yellow raincoat with waterproof material and attached hood",29.99,Raincoats,Yellow,2022-01-04
+5,Purple Scarf,"A warm and fashionable purple scarf made of wool",12.99,Scarves,Purple,2022-01-05
+6,Orange Polo Shirt,"A bright orange polo shirt made of breathable material",19.99,Polo Shirts,Orange,2022-01-06
+7,Black Leather Jacket,"A sleek and stylish black leather jacket with zippered pockets",89.99,Leather Jackets,Black,2022-01-07
+8,White Blouse,"A sophisticated white blouse made of silky material and with ruffled collar",24.99,Blouses,White,2022-01-08
+9,Pink Jumpsuit,"A playful pink jumpsuit with spaghetti straps and wide legs",39.99,Jumpsuits,Pink,2022-01-09
+10,Brown Boots,"A comfortable pair of brown boots with low heel and faux leather material",49.99,Boots,Brown,2022-01-10
+11,Gray Cardigan,"A cozy gray cardigan made of soft knit material and with front buttons",29.99,Cardigans,Gray,2022-01-11
+12,Navy Blue Pants,"A classic pair of navy blue pants made of stretchy material",24.99,Pants,Navy Blue,2022-01-12
+13,Beige Coat,"A timeless beige coat with double-breasted buttons and waist belt",69.99,Coats,Beige,2022-01-13
+14,Maroon Sweater,"A warm and cozy maroon sweater with ribbed collar and cuffs",19.99,Sweaters,Maroon,2022-01-14
+15,Olive Green Cargo Pants,"A rugged pair of olive green cargo pants with multiple pockets",39.99,Cargo Pants,Olive Green,2022-01-15
+16,Tan Suede Skirt,"A soft and stylish tan suede skirt with A-line silhouette",29.99,Skirts,Tan,2022-01-16
+17,Charcoal Gray Blazer,"A sleek and professional charcoal gray blazer with notch lapel",59.99,Blazers,Charcoal Gray,2022-01-17
+18,Teal Maxi Dress,"A flowy and elegant teal maxi dress with lace trim and spaghetti straps",49.99,Maxi Dresses,Teal,2022-01-18
+19,Magenta Crop Top,"A flirty magenta crop top with ruffled hem and off-the-shoulder sleeves",14.99,Crop Tops,Magenta,2022-01-19
+20,Black Leggings,"A versatile pair of black leggings made of stretchy material",14.99,Leggings,Black,2022-01-20
+21,White Tank Top,"A basic white tank top made of soft cotton material",9.99,Tank Tops,White,2022-01-21
+22,Navy Blue Blouse,"A chic navy blue blouse with V-neckline and flared sleeves",29.99,Blouses,Navy Blue,2022-01-22
+23,Red Pleated Skirt,"A vibrant red pleated skirt with high waist and midi length",24.99,Skirts,Red,2022-01-23
+24,Black Leather Boots,"A stylish pair of black leather boots with chunky heel and zipper closure",69.99,Boots,Black,2022-01-24
+25,Gray Sweatshirt,"A cozy gray sweatshirt with fleece lining and front pocket",19.99,Sweatshirts,Gray,2022-01-25
+26,Green Cargo Jacket,"A trendy green cargo jacket with drawstring waist and multiple pockets",44.99,Jackets,Green,2022-01-26
+27,Yellow Sweater,"A cheerful yellow sweater with cable knit pattern and mock neckline",29.99,Sweaters,Yellow,2022-01-27
+28,Pink Midi Dress,"A pretty pink midi dress with floral print and flutter sleeves",39.99,Midi Dresses,Pink,2022-01-28
+29,Black Denim Jacket,"A versatile black denim jacket with button-up front and chest pockets",54.99,Denim Jackets,Black,2022-01-29
+30,Blue Skinny Jeans,"A classic pair of blue skinny jeans with high waist and ankle length",34.99,Skinny Jeans,Blue,2022-01-30
+31,White Crochet Top,"A cute white crochet top with scalloped hem and short sleeves",19.99,Crochet Tops,White,2022-01-31
+32,Red Plaid Skirt,"A timeless red plaid skirt with A-line silhouette and side zipper",29.99,Skirts,Red,2022-02-01
+33,Black Jumpsuit,"A chic black jumpsuit with halter neckline and wide legs",49.99,Jumpsuits,Black,2022-02-02
+34,Brown Leather Belt,"A classic brown leather belt with silver buckle and belt loops",14.99,Belts,Brown,2022-02-03
+35,Gray Flannel Shirt,"A cozy gray flannel shirt with button-up front and chest pocket",24.99,Flannel Shirts,Gray,2022-02-04
+36,Blue Puffer Vest,"A lightweight blue puffer vest with zippered front and side pockets",34.99,Puffer Vests,Blue,2022-02-05
+37,Purple Maxi Skirt,"A flowy purple maxi skirt with elastic waist and side slit",39.99,Maxi Skirts,Purple,2022-02-06
+38,Green Cable Knit Sweater,"A warm green cable knit sweater with mock neckline and long sleeves",39.99,Cable Knit Sweaters,Green,2022-02-07
+39,Black Leather Skirt,"A sleek black leather skirt with pencil silhouette and back slit",59.99,Leather Skirts,Black,2022-02-08
+40,White Lace Dress,"A beautiful white lace dress with spaghetti straps and scalloped hem",59.99,Lace Dresses,White,2022-02-09
+41,Black Turtleneck Sweater,"A classic black turtleneck sweater made of soft wool material",39.99,Turtleneck Sweaters,Black,2022-02-10
+42,Red Striped Shirt,"A stylish red and white striped shirt with button-up front and long sleeves",29.99,Striped Shirts,Red,2022-02-11
+43,Blue Denim Skirt,"A versatile blue denim skirt with A-line silhouette and frayed hem",24.99,Denim Skirts,Blue,2022-02-12
+44,Gray Fleece Jacket,"A cozy gray fleece jacket with zippered front and side pockets",44.99,Fleece Jackets,Gray,2022-02-13
+45,Pink Hoodie,"A comfortable pink hoodie with drawstring hood and kangaroo pocket",19.99,Hoodies,Pink,2022-02-14
+46,Black Leather Jacket,"A timeless black leather jacket with asymmetrical zipper and silver hardware",89.99,Leather Jackets,Black,2022-02-15
+47,Green Cargo Pants,"A practical pair of green cargo pants with multiple pockets and adjustable cuffs",49.99,Cargo Pants,Green,2022-02-16
+48,Yellow Floral Dress,"A cheerful yellow floral dress with V-neckline and ruffled hem",34.99,Floral Dresses,Yellow,2022-02-17
+49,White Linen Shirt,"A lightweight white linen shirt with button-up front and short sleeves",24.99,Linen Shirts,White,2022-02-18
+50,Black Lace Top,"A delicate black lace top with scalloped hem and long sleeves",29.99,Lace Tops,Black,2022-02-19
