@@ -26,8 +26,11 @@ curl https://localhost:9200 -ku admin:admin
 I am experimenting with Dagster
 
 ```
-dagster dev -f ./pipeline/products-dagster.py
+dagster dev -f ./pipeline/products_dagster.py
 ```
+
+https://docs.dagster.io/getting-started
+
 
 # References
 Just some articles I used

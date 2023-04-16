@@ -5,6 +5,7 @@ import pandas as pd
 
 from dagster import MetadataValue, Output, asset
 
+from search import create_update_template
 from search.opensearch import create_index, switch_alias_to, index_product
 
 
@@ -29,6 +30,7 @@ def transform_sales(products: pd.DataFrame):
     sales = pd.read_csv('./data_sources/sales.csv')
 
     merged_products = pd.merge(products, sales, left_on="id", right_on="product_id")
+    merged_products = merged_products.drop(columns=['product_id'])
 
     metadata = {
         "transformation": "Read the sales from a csv file and added the amount of sales to the product",
@@ -47,6 +49,7 @@ def transform_stock(transform_sales: pd.DataFrame):
     stocks = pd.read_csv('./data_sources/stock.csv')
 
     merged_products = pd.merge(transform_sales, stocks, left_on="id", right_on="product_id")
+    merged_products = merged_products.drop(columns=['product_id'])
 
     metadata = {
         "transformation": "Read the clicks from an external system and added the amount of clicks to the product",
@@ -78,6 +81,7 @@ def transform_clicks(transform_stock: pd.DataFrame):
 def load(transform_clicks: pd.DataFrame):
     """Load the product data into OpenSearch
     """
+    create_update_template()
     products_index = create_index()
 
     # iterate over all DataFrame items and send them to Opensearch

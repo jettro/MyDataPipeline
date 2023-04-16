@@ -4,8 +4,11 @@
   "template": {
     "mappings": {
       "properties": {
-        "brand": {
+        "category": {
           "type": "keyword"
+        },
+        "description": {
+          "type": "text"
         }
       }
     }
@@ -14,5 +17,5 @@
     "jc_settings",
     "jc_dynamic_template"
   ],
-  "version": 1
+  "version": 2
 }

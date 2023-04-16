@@ -6,6 +6,8 @@ from logging import config
 from log_config import logging_config
 from dotenv import load_dotenv
 
+from search import SearchRequest
+
 load_dotenv()  # take environment variables from .env.
 
 auth = (os.getenv('OS_USERNAME'), os.getenv('OS_PASSWORD'))
@@ -16,4 +18,4 @@ run_logging = logging.getLogger("runner")
 
 
 if __name__ == '__main__':
-    search.create_update_template()
+    search.execute_query(SearchRequest(search_text="blue dress", explain=True))
