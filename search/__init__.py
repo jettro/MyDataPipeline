@@ -5,6 +5,7 @@ from search.template import create_update_template
 from search.opensearch import opensearch
 from search.query_pipeline import QueryPipeline, PipelineStep, LogInputPipelineStep
 from search.reorder_query_pipeline_step import ReorderQueryPipelineStep
+from search.rerank_crossencoder_pipeline_step import RerankCrossencoderPipelineStep
 
 # test the connection
 if opensearch.ping():
@@ -19,5 +20,6 @@ __all__ = [
     'QueryPipeline',
     'PipelineStep',
     'LogInputPipelineStep',
-    'ReorderQueryPipelineStep'
+    'ReorderQueryPipelineStep',
+    'RerankCrossencoderPipelineStep'
 ]

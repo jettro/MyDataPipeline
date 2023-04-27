@@ -69,7 +69,7 @@ class WeaviateClient:
             self.client.query
             .get("Question", ["question", "answer", "category"])
             .with_near_text(near_text)
-            .with_limit(2)
+            .with_limit(5)
             .do()
         )
 
