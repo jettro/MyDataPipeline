@@ -17,13 +17,29 @@ class SearchRequest:
 def execute_query(search_request: SearchRequest):
     body = {
         "query": {
-            "multi_match": {
-                "query": search_request.search_text,
-                "fields": ["name", "description"],
-                "type": "cross_fields"
+            "bool": {
+                "must": [
+                    {
+                        "multi_match": {
+                            "query": search_request.search_text,
+                            "fields": ["name", "description"],
+                            "type": "cross_fields"
+                        }
+                    }
+                ],
+                "filter": []
             }
         }
     }
+
+    if search_request.color:
+        color_filter = {
+                        "term": {
+                            "color.keyword": search_request.color
+                        }
+                    }
+        body["query"]["bool"]["filter"].append(color_filter)
+
     search_results = opensearch.search(index=ALIAS_NAME, body=body, explain=search_request.explain)
     hit = search_results["hits"]["hits"][0]
     explanation = hit["_explanation"]

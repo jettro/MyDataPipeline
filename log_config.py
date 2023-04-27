@@ -17,7 +17,17 @@ logging_config = {
         }
     },
     "loggers": {
+        "reorder": {
+            "handlers": ["console"],
+            "level": LOG_LEVEL,
+            "propagate": False,
+        },
         "pipeline": {
+            "handlers": ["console"],
+            "level": LOG_LEVEL,
+            "propagate": False,
+        },
+        "weaviate": {
             "handlers": ["console"],
             "level": LOG_LEVEL,
             "propagate": False,
