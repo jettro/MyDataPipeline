@@ -9,8 +9,8 @@ class QueryForProductsPipelineStep(PipelineStep):
 
     def __init__(self, name: str, weaviate_client: WeaviateClient):
         super().__init__(name)
-        self.logger = logging.getLogger("weaviate")
         self.weaviate_client = weaviate_client
+        self.logger = logging.getLogger("weaviate")
 
     def execute_step(self, input_data):
         query_text = input_data["search_text"]
