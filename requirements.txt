@@ -8,3 +8,4 @@ requests~=2.28.2
 transformers
 torch
 sentence-transformers
+beautifulsoup4

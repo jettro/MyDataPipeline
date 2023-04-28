@@ -5,8 +5,7 @@ import pandas as pd
 
 from dagster import MetadataValue, Output, asset
 
-from search import create_update_template
-from search.opensearch import create_index, switch_alias_to, index_product
+from search import OpenSearchClient, OpenSearchTemplate
 
 
 @asset
@@ -81,16 +80,18 @@ def transform_clicks(transform_stock: pd.DataFrame):
 def load(transform_clicks: pd.DataFrame):
     """Load the product data into OpenSearch
     """
-    create_update_template()
-    products_index = create_index()
+    os_client = OpenSearchClient("product")
+    os_template = OpenSearchTemplate(os_client)
+    os_template.create_update_template()
+    products_index = os_client.create_index()
 
     # iterate over all DataFrame items and send them to Opensearch
 
     for index, row in transform_clicks.iterrows():
         product = row.to_dict()
-        index_product(product=product, index_name=products_index)
+        os_client.index_product(product=product, index_name=products_index)
 
-    switch_alias_to(products_index)
+    os_client.switch_alias_to(products_index)
 
     metadata = {
         "preview": MetadataValue.md(

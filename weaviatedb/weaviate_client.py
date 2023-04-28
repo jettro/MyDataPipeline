@@ -1,14 +1,12 @@
-import os
-from copy import deepcopy
-
-import weaviate
-import requests
-import json
 import logging
+import os
 
+import pandas as pd
+import weaviate
+from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
-from search import PipelineStep
+from util import load_json_body_from_file
 
 load_dotenv()  # take environment variables from .env.
 
@@ -16,11 +14,11 @@ auth_config = weaviate.auth.AuthApiKey(
     api_key=os.getenv('WEAVIATE_API_KEY'),
 )
 
-weaviate_log = logging.getLogger("weaviate")
-
 
 class WeaviateClient:
     def __init__(self):
+        self.logger = logging.getLogger("weaviate")
+        self.logger.info("Creating a new WeaviateClient")
         self.client = weaviate.Client(
             url=os.getenv('WEAVIATE_URL'),
             auth_client_secret=auth_config,
@@ -28,63 +26,65 @@ class WeaviateClient:
                 "X-OpenAI-Api-Key": os.getenv('OPEN_AI_API_KEY')
             }
         )
+        self.logger.info(f"Weaviate client is connected: {self.client.is_ready()}")
 
-        weaviate_log.info(f"Weaviate client is connected: {self.client.is_ready()}")
+    def __del__(self):
+        self.logger.info("Removing the WeaviateClient from the earth")
 
     def get_schema(self):
         return self.client.schema.get()
 
-    def create_classes(self):
-        class_obj = {
-            "class": "Question",
-            "vectorizer": "text2vec-openai"
-        }
+    def create_classes(self, path_to_schema: str):
+        class_obj = load_json_body_from_file(file_name=path_to_schema)
 
         self.client.schema.create_class(class_obj)
 
+    def delete_schema(self):
+        self.client.schema.delete_all()
+
+    def delete_class(self, class_name: str):
+        self.client.schema.delete(class_name)
+
     def load_data(self):
-        url = 'https://raw.githubusercontent.com/weaviate-tutorials/quickstart/main/data/jeopardy_tiny.json'
-        resp = requests.get(url)
-        data = json.loads(resp.text)
+        url = 'https://raw.githubusercontent.com/weaviate/ref2vec-ecommerce-demo/main/weaviate-init/metadata/metadata' \
+              '/products_gear_bags.csv'
+        df = pd.read_csv(url, encoding='utf-8')
 
         # Configure a batch process
         with self.client.batch as batch:
             batch.batch_size = 100
             # Batch import all Questions
-            for i, d in enumerate(data):
-                weaviate_log.info(f"importing question: {i + 1}")
+            for index, row in df.iterrows():
+                self.logger.info(f"importing question")
 
                 properties = {
-                    "answer": d["Answer"],
-                    "question": d["Question"],
-                    "category": d["Category"],
+                    "category": self.__clean_html(row["category"]),
+                    "name": self.__clean_html(row["name"]),
+                    "price": row["price"],
+                    "qty": row["qty"],
+                    "description": self.__clean_html(row["description"])
                 }
 
-                self.client.batch.add_data_object(properties, "Question")
+                self.client.batch.add_data_object(properties, "Product")
+
+    @staticmethod
+    def __clean_html(to_clean: str):
+        """
+        Removes all HTML tags from the provided text and returned the cleaned text
+        :param to_clean: String containing the text to be cleaned
+        :return: The cleaned string
+        """
+        soup = BeautifulSoup(to_clean, 'html.parser')
+        no_html = soup.get_text()
+        return no_html.replace("\n", " ")
 
     def query(self, query_text: str):
         near_text = {"concepts": [query_text]}
 
         return (
             self.client.query
-            .get("Question", ["question", "answer", "category"])
+            .get("Product", ["name", "description", "category"])
             .with_near_text(near_text)
             .with_limit(5)
             .do()
         )
-
-
-class CallWeaviatePipelineStep(PipelineStep):
-
-    def __init__(self, name: str):
-        super().__init__(name)
-        self.weaviate_client=WeaviateClient()
-
-    def execute_step(self, input_data):
-        query_text = input_data["search_text"]
-        weaviate_log.info(f"Execute the query for search text {query_text}")
-
-        response = self.weaviate_client.query(query_text=query_text)
-        output_data = deepcopy(input_data)
-        output_data["result_items"] = response["data"]["Get"]["Question"]
-        return output_data

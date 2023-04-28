@@ -1,0 +1,42 @@
+{
+  "class": "Product",
+  "description": "This is a product representation",
+  "vectorizer": "text2vec-openai",
+  "properties": [
+    {
+      "dataType": [
+        "text"
+      ],
+      "name": "description",
+      "description": "A description of the product."
+    },
+    {
+      "dataType": [
+        "text"
+      ],
+      "name": "sku",
+      "description": "A product."
+    },
+    {
+      "dataType": [
+        "text"
+      ],
+      "name": "category",
+      "description": "A product category"
+    },
+    {
+      "dataType": [
+        "int"
+      ],
+      "name": "price",
+      "description": "A product."
+    },
+    {
+      "dataType": [
+        "int"
+      ],
+      "name": "qty",
+      "description": "A product."
+    }
+  ]
+}

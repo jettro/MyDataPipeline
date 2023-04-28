@@ -4,7 +4,7 @@ from copy import deepcopy
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-from search import PipelineStep
+from util import PipelineStep
 
 reorder_pipeline_log = logging.getLogger("reorder")
 

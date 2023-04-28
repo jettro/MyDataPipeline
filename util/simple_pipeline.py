@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 query_pipeline_log = logging.getLogger("pipeline")
 
 
-class QueryPipeline:
+class SimplePipeline:
     def __init__(self, steps: list):
         self.steps = steps
 
@@ -28,7 +28,7 @@ class QueryPipeline:
 
 
 class PipelineStep(ABC):
-    def __init__(self, name:str):
+    def __init__(self, name: str):
         self.name = name
 
     @abstractmethod
@@ -40,5 +40,8 @@ class PipelineStep(ABC):
 
 
 class LogInputPipelineStep(PipelineStep):
+
     def execute_step(self, input_data):
+        query_pipeline_log.info(f"The input looks like this:")
+        query_pipeline_log.info(input_data)
         return input_data
