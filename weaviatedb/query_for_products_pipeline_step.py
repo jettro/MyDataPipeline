@@ -7,12 +7,15 @@ from weaviatedb import WeaviateClient
 
 class QueryForProductsPipelineStep(PipelineStep):
 
-    def __init__(self, name: str, weaviate_client: WeaviateClient):
-        super().__init__(name)
+    def __init__(self, name: str, weaviate_client: WeaviateClient, enabled: bool = True):
+        super().__init__(name, enabled=enabled)
         self.weaviate_client = weaviate_client
         self.logger = logging.getLogger("weaviate")
 
     def execute_step(self, input_data):
+        if not self.enabled:
+            self.logger.info(f"Step {self.name} is disabled.")
+            return input_data
         query_text = input_data["search_text"]
         self.logger.info(f"Execute the query for search text {query_text}")
 

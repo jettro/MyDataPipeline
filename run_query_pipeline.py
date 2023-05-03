@@ -7,7 +7,7 @@ from log_config import logging_config
 
 from util import LogInputPipelineStep, SimplePipeline
 from weaviatedb import WeaviateClient, InitializeProductsInWeaviatePipelineStep, QueryForProductsPipelineStep
-from reranking import RerankCrossencoderPipelineStep
+from reranking import RerankCrossencoderPipelineStep, ReorderQueryPipelineStep
 
 load_dotenv()  # take environment variables from .env.
 config.dictConfig(logging_config)
@@ -20,6 +20,7 @@ if __name__ == '__main__':
                                                  weaviate_client=weaviate_client,
                                                  enabled=False),
         QueryForProductsPipelineStep(name="Query Weaviate", weaviate_client=weaviate_client),
+        ReorderQueryPipelineStep(name="Reorder results", enabled=False),
         RerankCrossencoderPipelineStep(name="Rerank using cross encoder")
     ]
     pipeline = SimplePipeline(steps=steps)

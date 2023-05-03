@@ -6,7 +6,7 @@ from weaviatedb import WeaviateClient
 
 
 class InitializeProductsInWeaviatePipelineStep(PipelineStep):
-    def __init__(self, name: str, weaviate_client: WeaviateClient, enabled: bool):
+    def __init__(self, name: str, weaviate_client: WeaviateClient, enabled: bool = True):
         super().__init__(name, enabled=enabled)
         self.weaviate_client = weaviate_client
         self.logger = logging.getLogger("weaviate")

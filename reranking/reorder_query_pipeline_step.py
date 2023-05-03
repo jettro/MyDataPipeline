@@ -6,20 +6,22 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 from util import PipelineStep
 
-reorder_pipeline_log = logging.getLogger("reorder")
-
 # Load the pre-trained cross-encoder model and tokenizer
 model_name = "sentence-transformers/paraphrase-xlm-r-multilingual-v1"
 
 
 class ReorderQueryPipelineStep(PipelineStep):
 
-    def __init__(self, name: str):
-        super().__init__(name)
+    def __init__(self, name: str, enabled: bool = True):
+        super().__init__(name, enabled=enabled)
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
+        self.logger = logging.getLogger("reorder")
 
     def execute_step(self, input_data):
+        if not self.enabled:
+            self.logger.info(f"Step {self.name} is disabled.")
+            return input_data
 
         # Define the query and candidate results
         query = input_data["search_text"]

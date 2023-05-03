@@ -5,18 +5,21 @@ from sentence_transformers import CrossEncoder
 
 from util import PipelineStep
 
-reorder_pipeline_log = logging.getLogger("reorder")
-
 # model = CrossEncoder('cross-encoder/ms-marco-TinyBERT-L-2', max_length=512)
 model = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-12-v2', max_length=512)
 
 
 class RerankCrossencoderPipelineStep(PipelineStep):
 
-    def __init__(self, name: str):
-        super().__init__(name)
+    def __init__(self, name: str, enabled: bool = True):
+        super().__init__(name, enabled=enabled)
+        self.logger = logging.getLogger("reorder")
 
     def execute_step(self, input_data):
+        if not self.enabled:
+            self.logger.info(f"Step {self.name} is disabled.")
+            return input_data
+
         # Define the query and candidate results
         query = input_data["search_text"]
         query_results = input_data["result_items"]
