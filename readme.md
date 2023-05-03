@@ -1,3 +1,32 @@
+# Introduction
+Welcome to my data pipeline project. This is not one project, it contains multiple things that help me explore
+new technologies. I'll explain the different applications below. In general the structure follows the following 
+foundation.
+
+- config_files : Contains the files need to configer components like indexes in OpenSearch or a schema in Weaviate
+- data_sources : contain the different available data files used in the applications
+- tests : Contain very little unit tests, only used to test small specific things to try out.
+- infra : docker files to startup specific components (OpenSearch for instance)
+
+The other folders are modules:
+- pipeline : Contains the Dagster pipeline that manages the indexes in OpenSearch
+- reranking : Components that can re-rank results
+- search : Contains the files related to using OpenSearch for templates, data, query and a tool to parse explain output
+- util : Small utilities that we can re-use in the modules
+- weaviatedb : Files used to interact with Weaviate
+
+Files
+- log_config.py : Configuration for the Python logging framework
+- requirements.txt : The Python libraries used in the project
+- run_query_pipeline.py : runner for the Weaviate pipeline to query Weaviate using the re-ranker as well
+
+## 
+
+
+
+
+
+
 # Docker issues with Opensearch
 
 Create the following file:

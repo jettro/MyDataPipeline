@@ -28,8 +28,9 @@ class SimplePipeline:
 
 
 class PipelineStep(ABC):
-    def __init__(self, name: str):
+    def __init__(self, name: str, enabled: bool = True):
         self.name = name
+        self.enabled = enabled
 
     @abstractmethod
     def execute_step(self, input_data):
