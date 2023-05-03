@@ -12,6 +12,16 @@ from reranking import RerankCrossencoderPipelineStep, ReorderQueryPipelineStep
 load_dotenv()  # take environment variables from .env.
 config.dictConfig(logging_config)
 
+
+def compare_results(response):
+    results = response["result_items"]
+    reordered = response["result_items_reranked"]
+
+    for i in range(0, len(results)):
+        print(f"name {results[i]['name'].ljust(35)}, name {reordered[i]['input']['name'].ljust(35)}, "
+              f"score {reordered[i]['score']}")
+
+
 if __name__ == '__main__':
     weaviate_client = WeaviateClient()
     steps = [
@@ -25,4 +35,5 @@ if __name__ == '__main__':
     ]
     pipeline = SimplePipeline(steps=steps)
     response = pipeline.start_process(input_data={"search_text": "high heal"})
-    print(json.dumps(response, indent=4, default=float))
+    # print(json.dumps(response, indent=4, default=float))
+    compare_results(response)

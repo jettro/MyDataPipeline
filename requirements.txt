@@ -9,3 +9,4 @@ transformers
 torch
 sentence-transformers
 beautifulsoup4
+openai
