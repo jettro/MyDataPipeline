@@ -5,8 +5,7 @@ from sentence_transformers import CrossEncoder
 
 from util import PipelineStep
 
-# model = CrossEncoder('cross-encoder/ms-marco-TinyBERT-L-2', max_length=512)
-model = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-12-v2', max_length=512)
+model = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-12-v2', max_length=512,)
 
 
 class RerankCrossencoderPipelineStep(PipelineStep):
@@ -25,12 +24,12 @@ class RerankCrossencoderPipelineStep(PipelineStep):
         query_results = input_data["result_items"]
 
         model_inputs = [[query, result["name"]] for result in query_results]
-        scores = model.predict(model_inputs)
+        scores = model.predict(model_inputs, apply_softmax=True)
 
         # Sort the scores in decreasing order
         results = [{'input': inp, 'score': score} for inp, score in zip(query_results, scores)]
         results = sorted(results, key=lambda x: x['score'], reverse=True)
 
         output_data = deepcopy(input_data)
-        output_data["result_items_reranked"] = results
+        output_data["result_items_reranked_cross"] = results
         return output_data

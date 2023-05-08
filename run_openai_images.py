@@ -10,7 +10,7 @@ openai.api_key = os.getenv('OPEN_AI_API_KEY')
 
 if __name__ == '__main__':
     response = openai.Image.create(
-        prompt="a lake with smelly water, dead trees surrounding it and a monster coming half out of the water",
+        prompt="a fast car driving through the dessert with a monkey on top of the roof",
         n=1,
         size="1024x1024"
     )
