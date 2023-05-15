@@ -43,7 +43,7 @@ class WeaviateClient:
         self.client.schema.delete_all()
 
     def delete_class(self, class_name: str):
-        self.client.schema.delete(class_name)
+        self.client.schema.delete_class(class_name)
 
     def load_data(self):
         url = 'https://raw.githubusercontent.com/weaviate/ref2vec-ecommerce-demo/main/weaviate-init/metadata/metadata' \

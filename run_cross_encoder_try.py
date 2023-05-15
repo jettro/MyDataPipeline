@@ -6,7 +6,7 @@ from util import LogInputPipelineStep, SimplePipeline
 
 def compare_results(response):
     results = response["result_items"]
-    result_items_reranked = response["result_items_reranked"]
+    result_items_reranked = response["result_items_reranked_cross"]
 
     for r in results:
         print(f"id: {r['id']}, name {r['name'].ljust(35)}")
@@ -43,7 +43,6 @@ if __name__ == '__main__':
         RerankOpenaiPipelineStep(name="Rerank using open ai")
     ]
     pipeline = SimplePipeline(steps=steps)
-    # "search_text": "What to wear to a beach wedding? I like yellow",
     response = pipeline.start_process(
         input_data={
             "search_text": "I am attending a wedding and I am looking for something to wear. I am not the bride. "

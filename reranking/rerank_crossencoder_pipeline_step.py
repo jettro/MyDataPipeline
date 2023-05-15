@@ -1,6 +1,7 @@
 import logging
 from copy import deepcopy
 
+import torch
 from sentence_transformers import CrossEncoder
 
 from util import PipelineStep
@@ -24,7 +25,9 @@ class RerankCrossencoderPipelineStep(PipelineStep):
         query_results = input_data["result_items"]
 
         model_inputs = [[query, result["name"]] for result in query_results]
-        scores = model.predict(model_inputs, apply_softmax=True)
+        # Try to understand the difference
+        # scores = model.predict(model_inputs, apply_softmax=True)
+        scores = model.predict(model_inputs, activation_fct=torch.nn.Sigmoid())
 
         # Sort the scores in decreasing order
         results = [{'input': inp, 'score': score} for inp, score in zip(query_results, scores)]
