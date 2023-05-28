@@ -11,3 +11,5 @@ torch
 sentence-transformers
 beautifulsoup4
 openai
+langchain
+tiktoken

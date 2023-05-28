@@ -12,21 +12,22 @@ search_log = logging.getLogger("search")
 
 
 class OpenSearchClient:
-    def __init__(self, alias_name: str):
+    def __init__(self, alias_name: str = None):
         self.opensearch = OpenSearch(
             hosts=[{'host': 'localhost', 'port': 9200}],
             use_ssl=True,
             verify_certs=False,
             ssl_show_warn=False,
             http_auth=auth)
-        self.alias_name = alias_name
+        if alias_name:
+            self.alias_name = alias_name
 
     def ping(self):
         if self.opensearch.ping():
-            search_log.info('Connected to Elasticsearch')
+            search_log.info('Connected to OpenSearch')
             return True
         else:
-            search_log.warning('Could not connect to Elasticsearch')
+            search_log.warning('Could not connect to OpenSearch')
             return False
 
     def create_index(self):
@@ -74,7 +75,7 @@ class OpenSearchClient:
         search_results = self.opensearch.search(index=self.alias_name, body=body, explain=explain)
         return search_results
 
-    def set_component_template(self,name,body):
+    def set_component_template(self, name, body):
         self.opensearch.cluster.put_component_template(name=name, body=body)
 
     def set_index_template(self, name, body):
@@ -91,3 +92,6 @@ class OpenSearchClient:
 
     def get_component_template(self, name: str):
         return self.opensearch.cluster.get_component_template(name=name)
+
+    def delete_index(self, index_name: str):
+        self.opensearch.indices.delete(index=index_name, ignore_unavailable=True)

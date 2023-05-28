@@ -1,0 +1,34 @@
+{
+  "class": "RijksoverheidVac",
+  "description": "Dit is een vraag voor de Rijksoverheid ",
+  "vectorizer": "text2vec-openai",
+  "properties": [
+    {
+      "dataType": [
+        "text"
+      ],
+      "moduleConfig": {
+        "text2vec-openai": {"skip": false, "vectorizePropertyName": false}
+      },
+      "name": "text"
+    },
+    {
+      "dataType": [
+        "text"
+      ],
+      "moduleConfig": {
+        "text2vec-openai": {"skip": true}
+      },
+      "name": "docid"
+    },
+    {
+      "dataType": [
+        "text"
+      ],
+      "moduleConfig": {
+        "text2vec-openai": {"skip": true}
+      },
+      "name": "dataurl"
+    }
+  ]
+}
