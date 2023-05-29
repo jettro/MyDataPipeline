@@ -6,6 +6,10 @@ from langchain.schema import Document
 
 
 class CustomXMLLoader(BaseLoader):
+    """
+    Mainly copied from the GitHub issue:
+    https://github.com/hwchase17/langchain/issues/4859
+    """
     def __init__(self, file_path: str, encoding: str = "utf-8"):
         super().__init__()
         self.file_path = file_path

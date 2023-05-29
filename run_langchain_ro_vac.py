@@ -105,7 +105,7 @@ def run_opensearch(query: str = "enter your query", do_load_content: bool = Fals
 if __name__ == '__main__':
     run_logging.info("Starting the script Langchain Rijksoverheid Vraag Antwoord Combinaties")
 
-    query_str = "mag ik met electrische step op weg"
+    query_str = "mag ik een groen zwaai licht"
 
     run_weaviate(query=query_str,
                  do_load_content=False)
