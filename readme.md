@@ -14,18 +14,13 @@ The other folders are modules:
 - search : Contains the files related to using OpenSearch for templates, data, query and a tool to parse explain output
 - util : Small utilities that we can re-use in the modules
 - weaviatedb : Files used to interact with Weaviate
+- langchainmod : Files used to interact with Langchain code
 
 Files
 - log_config.py : Configuration for the Python logging framework
 - requirements.txt : The Python libraries used in the project
 - run_query_pipeline.py : runner for the Weaviate pipeline to query Weaviate using the re-ranker as well
-
-## 
-
-
-
-
-
+- run_langchain_ro_vac.py : Runner for the langchain sample that imports and queries multiple vector stores
 
 # Docker issues with Opensearch
 

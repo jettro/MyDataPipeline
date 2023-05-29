@@ -29,7 +29,7 @@ class WeaviateClient:
         self.logger.info(f"Weaviate client is connected: {self.client.is_ready()}")
 
     def __del__(self):
-        self.logger.info("Removing the WeaviateClient from the earth")
+        self.logger.debug("Removing the WeaviateClient from the earth")
 
     def get_schema(self):
         return self.client.schema.get()

@@ -36,6 +36,16 @@ def load_weaviate_schema(weaviate_client: WeaviateClient) -> None:
 
 
 def load_content(vector_store: VectorStore) -> None:
+    """
+    Load the content from the following endpoint:
+    https://www.rijksoverheid.nl/opendata/vac-s
+
+    More information about possible parameters can be found here:
+    https://www.rijksoverheid.nl/opendata/open-data-filteren
+
+    :param vector_store: Langchain VectorStore to load the data into
+    :return: None
+    """
     run_logging.info("Load the content")
 
     custom_xml_loader = CustomXMLLoader(file_path="https://opendata.rijksoverheid.nl/v1/infotypes/faq?rows=200")
@@ -95,8 +105,10 @@ def run_opensearch(query: str = "enter your query", do_load_content: bool = Fals
 if __name__ == '__main__':
     run_logging.info("Starting the script Langchain Rijksoverheid Vraag Antwoord Combinaties")
 
-    run_weaviate(query="waar moet ik bij een vrachtwagen op letten",
+    query_str = "mag ik met electrische step op weg"
+
+    run_weaviate(query=query_str,
                  do_load_content=False)
 
-    run_opensearch(query="waar moet ik bij een vrachtwagen op letten",
-                   do_load_content=True)
+    run_opensearch(query=query_str,
+                   do_load_content=False)
