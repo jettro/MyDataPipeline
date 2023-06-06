@@ -29,6 +29,15 @@
         "text2vec-openai": {"skip": true}
       },
       "name": "dataurl"
+    },
+    {
+      "dataType": [
+        "text"
+      ],
+      "moduleConfig": {
+        "text2vec-openai": {"skip": false, "vectorizePropertyName": false}
+      },
+      "name": "antwoord"
     }
   ]
 }

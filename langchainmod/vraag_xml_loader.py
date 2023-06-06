@@ -5,7 +5,7 @@ from langchain.document_loaders.base import BaseLoader
 from langchain.schema import Document
 
 
-class CustomXMLLoader(BaseLoader):
+class VraagXMLLoader(BaseLoader):
     """
     Mainly copied from the GitHub issue:
     https://github.com/hwchase17/langchain/issues/4859
