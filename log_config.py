@@ -37,6 +37,11 @@ logging_config = {
             "level": "INFO",
             "propagate": False,
         },
+        "langchain": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
         "runner": {
             "handlers": ["console"],
             "level": LOG_LEVEL,

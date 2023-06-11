@@ -86,7 +86,7 @@ def run_weaviate(query: str = "enter your query", do_load_content: bool = False)
     vector_store = Weaviate(
         client=weaviate_client.client,
         index_name=WEAVIATE_CLASS,
-        text_key="text",
+        text_key="question",
         attributes=["dataurl"]
     )
 
@@ -177,10 +177,10 @@ if __name__ == '__main__':
     query_str_32 = "How long do I have to wait for my drivers license?"
     query_str_33 = "How long do I have to wait to get my drivers license?"
 
-    query_str = query_str_23
+    query_str = query_str_31
 
-    # run_weaviate(query=query_str,
-    #              do_load_content=False)
+    run_weaviate(query=query_str,
+                 do_load_content=False)
 
     # run_opensearch(query=query_str,
     #                do_load_content=False)

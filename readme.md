@@ -55,6 +55,11 @@ dagster dev -f ./pipeline/products_dagster.py
 
 https://docs.dagster.io/getting-started
 
+# Weaviate custom QnA module
+
+First we need to create the custom DockerFile. Then start docker compose with the added local docker image
+docker build -f mdeberta.Dockerfile -t mdeberta-qna-transformers .
+
 
 # References
 Just some articles I used

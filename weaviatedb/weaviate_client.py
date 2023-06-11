@@ -1,6 +1,8 @@
 import logging
 import os
+from pprint import pprint
 
+import jq
 import pandas as pd
 import weaviate
 from bs4 import BeautifulSoup
@@ -17,19 +19,36 @@ auth_config = weaviate.auth.AuthApiKey(
 
 class WeaviateClient:
     def __init__(self):
+        weaviate_url = os.getenv('WEAVIATE_URL')
+
         self.logger = logging.getLogger("weaviate")
         self.logger.info("Creating a new WeaviateClient")
-        self.client = weaviate.Client(
-            url=os.getenv('WEAVIATE_URL'),
-            auth_client_secret=auth_config,
-            additional_headers={
-                "X-OpenAI-Api-Key": os.getenv('OPEN_AI_API_KEY')
-            }
-        )
+
+        if weaviate_url is None:
+            self.logger.error("Cannot create a Weaviate instance with an empty URL")
+
+        if not weaviate_url.startswith("http://localhost"):
+            self.client = weaviate.Client(
+                url=os.getenv('WEAVIATE_URL'),
+                auth_client_secret=auth_config,
+                additional_headers={
+                    "X-OpenAI-Api-Key": os.getenv('OPEN_AI_API_KEY')
+                }
+            )
+        else:
+            self.client = weaviate.Client(
+                url=os.getenv('WEAVIATE_URL'),
+            )
+
         self.logger.info(f"Weaviate client is connected: {self.client.is_ready()}")
 
     def __del__(self):
         self.logger.debug("Removing the WeaviateClient from the earth")
+
+    def inspect(self):
+        pprint(self.get_schema())
+        pprint(self.client.get_meta())
+        pprint(self.find_classes())
 
     def get_schema(self):
         return self.client.schema.get()
@@ -47,6 +66,10 @@ class WeaviateClient:
 
     def does_class_exist(self, class_name: str) -> bool:
         return self.client.schema.exists(class_name)
+
+    def find_classes(self):
+        schema = self.client.schema.get()
+        return jq.compile(".classes[].class").input(schema).all()
 
     def load_data(self):
         url = 'https://raw.githubusercontent.com/weaviate/ref2vec-ecommerce-demo/main/weaviate-init/metadata/metadata' \
