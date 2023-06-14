@@ -22,6 +22,8 @@ services:
       DEFAULT_VECTORIZER_MODULE: 'text2vec-transformers'
       ENABLE_MODULES: 'text2vec-transformers,qna-transformers'
       CLUSTER_HOSTNAME: 'node1'
+    volumes:
+      - ./data:/var/lib/weaviate
   t2v-transformers:
     image: semitechnologies/transformers-inference:sentence-transformers-paraphrase-multilingual-MiniLM-L12-v2
     environment:

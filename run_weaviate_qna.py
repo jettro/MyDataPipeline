@@ -1,3 +1,4 @@
+import json
 import logging
 from logging import config
 from pprint import pprint
@@ -49,7 +50,7 @@ def q_and_a(client: WeaviateClient, question: str):
         .get(WEAVIATE_CLASS, ["question", "antwoord",
                               "_additional {answer {hasAnswer certainty property result startPosition endPosition} }"])
         .with_ask(content=ask)
-        .with_limit(5)
+        .with_limit(1)
         .do()
     )
 
@@ -66,15 +67,21 @@ def query(client: WeaviateClient, query_text: str):
     )
 
 
+def print_result(result):
+    print(json.dumps(result, indent=2))
+
+
 if __name__ == '__main__':
     weaviate_client = WeaviateClient()
 
     # load_weaviate_schema(client=weaviate_client, schema_path="./config_files/rovac_weaviate_schema_local.json")
     # load_content(client=weaviate_client)
 
-    # pprint(weaviate_client.inspect())
+    # print_result(weaviate_client.inspect())
 
-    the_query = "waar kan ik mijn rijbewijs halen"
-    pprint(query(client=weaviate_client, query_text=the_query))
+    # the_query = "Kan ik met iemand praten over dementie?"
+    the_query = "hoeveel mag ik drinken als ik moet rijden?"
+    # the_query = "Met hoeveel alcohol mag ik deelnemen aan het verkeer"
+    print_result(query(client=weaviate_client, query_text=the_query))
 
-    pprint(q_and_a(client=weaviate_client, question=the_query))
+    print_result(q_and_a(client=weaviate_client, question=the_query))

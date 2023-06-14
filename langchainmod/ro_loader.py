@@ -15,6 +15,8 @@ def load_content_vacs(vector_store: VectorStore, offset: int = 0, rows: int = 10
     More information about possible parameters can be found here:
     https://www.rijksoverheid.nl/opendata/open-data-filteren
 
+    :param rows: Number of rows to obtain, the API specifies 200 as the maximum
+    :param offset: Start row, can be used to paginate through all the records
     :param vector_store: Langchain VectorStore to load the data into
     :return: None
     """

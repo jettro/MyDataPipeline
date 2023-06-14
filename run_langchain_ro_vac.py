@@ -15,7 +15,7 @@ from langchain.chains import RetrievalQA
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 
-from langchainmod import VraagXMLLoader, AntwoordXMLLoader
+from langchainmod import VraagXMLLoader, AntwoordXMLLoader, load_content_vacs
 from log_config import logging_config
 from search import OpenSearchClient
 from weaviatedb import WeaviateClient
@@ -38,49 +38,6 @@ def load_weaviate_schema(weaviate_client: WeaviateClient) -> None:
     run_logging.info("New schema for langchain rijksoverheid vac loaded.")
 
 
-def load_content(vector_store: VectorStore) -> None:
-    """
-    Load the content from the following endpoint:
-    https://www.rijksoverheid.nl/opendata/vac-s
-
-    More information about possible parameters can be found here:
-    https://www.rijksoverheid.nl/opendata/open-data-filteren
-
-    :param vector_store: Langchain VectorStore to load the data into
-    :return: None
-    """
-    run_logging.info("Load the content")
-
-    offset = 0
-    rows = 200
-    total = 200
-    while total >= 200:
-        url = f'https://opendata.rijksoverheid.nl/v1/infotypes/faq?rows={rows}&offset={offset}'
-        run_logging.info(url)
-        vraag_xml_loader = VraagXMLLoader(file_path=url)
-        docs = vraag_xml_loader.load()
-        # Fetch details
-        for doc in docs:
-            detail_url = doc.metadata["dataurl"]
-            antwoord = __load_answer(data_url=detail_url)
-            doc.metadata["antwoord"] = antwoord.page_content
-        total = len(docs)
-        run_logging.info(f"Store the content: offset {offset}, docs {total}")
-        vector_store.add_documents(docs)
-        offset = offset + rows
-
-
-def __load_answer(data_url: str):
-    antwoord_xml_loader = AntwoordXMLLoader(file_path=data_url)
-    antwoorden = antwoord_xml_loader.load()
-
-    # There should be only one antwoord
-    if len(antwoorden) == 1:
-        return antwoorden[0]
-    else:
-        run_logging.warning(f"No answer found, or to many answers. ({len(antwoorden)})")
-
-
 def run_weaviate(query: str = "enter your query", do_load_content: bool = False) -> None:
     weaviate_client = WeaviateClient()
     vector_store = Weaviate(
@@ -92,7 +49,7 @@ def run_weaviate(query: str = "enter your query", do_load_content: bool = False)
 
     if do_load_content:
         load_weaviate_schema(weaviate_client=weaviate_client)
-        load_content(vector_store=vector_store)
+        load_content_vacs(vector_store=vector_store, rows=200)
 
     index = VectorStoreIndexWrapper(vectorstore=vector_store)
     docs = index.vectorstore.similarity_search(
@@ -153,7 +110,7 @@ def run_opensearch(query: str = "enter your query", do_load_content: bool = Fals
 
     if do_load_content:
         opensearch_client.delete_index(OPENSEARCH_INDEX)
-        load_content(vector_store=vector_store)
+        load_content_vacs(vector_store=vector_store, rows=200)
 
     docs = vector_store.similarity_search_with_score(query=query)
     print(f"\nResults from: OpenSearch")
@@ -176,8 +133,9 @@ if __name__ == '__main__':
     query_str_31 = "Hoe lang duurt het om een rijbewijs aan te vragen?"
     query_str_32 = "How long do I have to wait for my drivers license?"
     query_str_33 = "How long do I have to wait to get my drivers license?"
+    query_str_34 = "hoeveel mag ik drinken als ik moet rijden?"
 
-    query_str = query_str_31
+    query_str = query_str_34
 
     run_weaviate(query=query_str,
                  do_load_content=False)
