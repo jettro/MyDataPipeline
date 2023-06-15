@@ -135,7 +135,7 @@ if __name__ == '__main__':
     query_str_33 = "How long do I have to wait to get my drivers license?"
     query_str_34 = "hoeveel mag ik drinken als ik moet rijden?"
 
-    query_str = query_str_34
+    query_str = query_str_21
 
     run_weaviate(query=query_str,
                  do_load_content=False)

@@ -58,7 +58,14 @@ https://docs.dagster.io/getting-started
 # Weaviate custom QnA module
 
 First we need to create the custom DockerFile. Then start docker compose with the added local docker image
+```shell
 docker build -f mdeberta.Dockerfile -t mdeberta-qna-transformers .
+docker compose -f docker-compose-weaviate.yml up -d
+```
+I am experimenting with streamlid to work with a gui as well. You have to run the sample with the following command:
+```shell
+streamlit run run_weaviate_qna.py
+```
 
 
 # References
