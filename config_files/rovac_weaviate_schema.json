@@ -4,13 +4,20 @@
   "vectorizer": "text2vec-openai",
   "moduleConfig": {
     "qna-openai": {
-          "model": "text-davinci-002",
-          "maxTokens": 32,
-          "temperature": 0.0,
-          "topP": 1,
-          "frequencyPenalty": 0.0,
-          "presencePenalty": 0.0
-        }
+      "model": "text-davinci-002",
+      "maxTokens": 64,
+      "temperature": 0.0,
+      "topP": 1,
+      "frequencyPenalty": 0.0,
+      "presencePenalty": 0.0
+    },
+    "generative-openai": {
+      "model": "gpt-3.5-turbo",
+      "temperatureProperty": 0,
+      "frequencyPenaltyProperty": 0.0,
+      "presencePenaltyProperty": 0.0,
+      "topPProperty": 1
+    }
   },
   "properties": [
     {
@@ -18,7 +25,10 @@
         "text"
       ],
       "moduleConfig": {
-        "text2vec-openai": {"skip": false, "vectorizePropertyName": false}
+        "text2vec-openai": {
+          "skip": false,
+          "vectorizePropertyName": false
+        }
       },
       "name": "question"
     },
@@ -27,7 +37,9 @@
         "text"
       ],
       "moduleConfig": {
-        "text2vec-openai": {"skip": true}
+        "text2vec-openai": {
+          "skip": true
+        }
       },
       "name": "docid"
     },
@@ -36,7 +48,9 @@
         "text"
       ],
       "moduleConfig": {
-        "text2vec-openai": {"skip": true}
+        "text2vec-openai": {
+          "skip": true
+        }
       },
       "name": "dataurl"
     },
@@ -45,7 +59,10 @@
         "text"
       ],
       "moduleConfig": {
-        "text2vec-openai": {"skip": false, "vectorizePropertyName": false}
+        "text2vec-openai": {
+          "skip": false,
+          "vectorizePropertyName": false
+        }
       },
       "name": "antwoord"
     }

@@ -1,6 +1,5 @@
 import json
 import logging
-import streamlit as st
 
 from logging import config
 
@@ -76,30 +75,13 @@ def print_result(result):
 if __name__ == '__main__':
     weaviate_client = WeaviateClient()
 
-    # load_weaviate_schema(client=weaviate_client, schema_path="./config_files/rovac_weaviate_schema_local.json")
-    # load_content(client=weaviate_client)
+    load_weaviate_schema(client=weaviate_client, schema_path="./config_files/rovac_weaviate_schema_local.json")
+    load_content(client=weaviate_client)
 
-    # print_result(weaviate_client.inspect())
+    print_result(weaviate_client.inspect())
 
-    the_query = "Kan ik met iemand praten over dementie?"
-    # the_query = "hoeveel mag ik drinken als ik moet rijden?"
-    # the_query = "Met hoeveel alcohol mag ik deelnemen aan het verkeer"
+    the_query = "hoeveel mag ik drinken als ik moet rijden?"
     print_result(query(client=weaviate_client, query_text=the_query))
 
     answer_response = q_and_a(client=weaviate_client, question=the_query)
     print_result(answer_response)
-    st.title("Find me an answer to my question")
-    st.header("Original question")
-    st.write(the_query)
-    st.header("Found question")
-    st.write(answer_response["data"]["Get"]["RijksoverheidVac"][0]["question"])
-
-    st.header("Created answer")
-    found_answer = answer_response["data"]["Get"]["RijksoverheidVac"][0]["_additional"]["answer"]
-    if found_answer["hasAnswer"]:
-        st.write(found_answer["result"])
-    else:
-        st.write("""*No answer found from text*""")
-
-    st.header("Actual answer")
-    st.write(answer_response["data"]["Get"]["RijksoverheidVac"][0]["antwoord"])

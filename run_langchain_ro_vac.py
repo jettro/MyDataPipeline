@@ -138,9 +138,9 @@ if __name__ == '__main__':
     query_str = query_str_21
 
     run_weaviate(query=query_str,
-                 do_load_content=False)
+                 do_load_content=True)
 
     # run_opensearch(query=query_str,
     #                do_load_content=False)
 
-    use_weaviate_for_qa(query=query_str)
+    # use_weaviate_for_qa(query=query_str)

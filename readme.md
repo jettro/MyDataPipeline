@@ -62,7 +62,7 @@ First we need to create the custom DockerFile. Then start docker compose with th
 docker build -f mdeberta.Dockerfile -t mdeberta-qna-transformers .
 docker compose -f docker-compose-weaviate.yml up -d
 ```
-I am experimenting with streamlid to work with a gui as well. You have to run the sample with the following command:
+I am experimenting with streamlit to work with a gui as well. You have to run the sample with the following command:
 ```shell
 streamlit run run_weaviate_qna.py
 ```

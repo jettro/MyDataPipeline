@@ -18,8 +18,11 @@ auth_config = weaviate.auth.AuthApiKey(
 
 
 class WeaviateClient:
-    def __init__(self):
-        weaviate_url = os.getenv('WEAVIATE_URL')
+    def __init__(self, overrule_weaviate_url: str = None):
+        if overrule_weaviate_url:
+            weaviate_url = overrule_weaviate_url
+        else:
+            weaviate_url = os.getenv('WEAVIATE_URL')
 
         self.logger = logging.getLogger("weaviate")
         self.logger.info("Creating a new WeaviateClient")
@@ -29,7 +32,7 @@ class WeaviateClient:
 
         if not weaviate_url.startswith("http://localhost"):
             self.client = weaviate.Client(
-                url=os.getenv('WEAVIATE_URL'),
+                url=weaviate_url,
                 auth_client_secret=auth_config,
                 additional_headers={
                     "X-OpenAI-Api-Key": os.getenv('OPEN_AI_API_KEY')
@@ -37,7 +40,7 @@ class WeaviateClient:
             )
         else:
             self.client = weaviate.Client(
-                url=os.getenv('WEAVIATE_URL'),
+                url=weaviate_url,
             )
 
         self.logger.info(f"Weaviate client is connected: {self.client.is_ready()}")
