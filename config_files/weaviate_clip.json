@@ -1,0 +1,27 @@
+{
+  "class": "Toys",
+  "description": "A sample to search for toys",
+  "moduleConfig": {
+    "multi2vec-clip": {
+      "imageFields": [
+        "image"
+      ]
+    }
+  },
+  "vectorIndexType": "hnsw",
+  "vectorizer": "multi2vec-clip",
+  "properties": [
+    {
+      "dataType": [
+        "string"
+      ],
+      "name": "filename"
+    },
+    {
+      "dataType": [
+        "blob"
+      ],
+      "name": "image"
+    }
+  ]
+}
