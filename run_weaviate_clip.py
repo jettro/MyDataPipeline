@@ -43,6 +43,7 @@ def query(client: WeaviateClient, query_text: str, the_limit: int = 3):
         .get(WEAVIATE_CLASS, ["filename"])
         .with_near_text(near_text)
         .with_limit(the_limit)
+        .with_additional(properties=["certainty", "distance"])
         .do()
     )
 
@@ -70,6 +71,12 @@ if __name__ == '__main__':
     if the_query:
         response = query(client=weaviate_client, query_text=the_query, the_limit=n_picts)
         if response["data"]["Get"]["Toys"]:
-            picts = [toy["filename"] for toy in response["data"]["Get"]["Toys"]]
+            picts = response["data"]["Get"]["Toys"]
             for col, pict in zip(cols, picts):
-                col.image(image="./data_sources/images/" + pict, caption=pict, width=200)
+                filename = pict["filename"]
+                certainty = pict["_additional"]["certainty"]
+                with col.container():
+                    col.image(image="./data_sources/images/" + filename,
+                              caption=filename,
+                              width=200)
+                    col.write(f"certainty: {'{:.5f}'.format(certainty)}")
