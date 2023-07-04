@@ -18,12 +18,11 @@ def load_weaviate_schema(client: WeaviateClient, schema_path: str) -> None:
 
 
 def store_images(client: WeaviateClient) -> None:
-    with client.client.batch() as batch:
+    with client.client.batch(batch_size=5) as batch:
         for x in os.listdir("./data_sources/images/"):
             if x.endswith(".jpg"):
                 with open("./data_sources/images/" + x, "rb") as img_file:
                     b64_string = base64.b64encode(img_file.read())
-                    print(b64_string)
 
                 data_obj = {
                     "filename": x,
@@ -33,6 +32,7 @@ def store_images(client: WeaviateClient) -> None:
                     data_obj,
                     WEAVIATE_CLASS
                 )
+                print(f"Stored file: {x}")
 
 
 def query(client: WeaviateClient, query_text: str, the_limit: int = 3):
