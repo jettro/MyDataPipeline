@@ -67,6 +67,19 @@ I am experimenting with streamlit to work with a gui as well. You have to run th
 streamlit run run_weaviate_qna.py
 ```
 
+# Weaviate clip image search
+
+Start docker compose for the clip model. Everything runs on your local machine
+```shell
+docker compose -f docker-compose-weaviate-clip.yml up -d
+```
+You have to run the sample with the following command, make sure streamlit is installed. Which should be fine if you 
+use the requirements.txt 
+```shell
+streamlit run run_weaviate_clip.py
+```
+
+
 
 # References
 Just some articles I used
