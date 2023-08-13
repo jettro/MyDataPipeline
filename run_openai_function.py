@@ -131,7 +131,8 @@ if __name__ == '__main__':
     openai.api_key = os.getenv('OPEN_AI_API_KEY')
 
     # message = "What is mobile phone number for Jettro Coenradie?"
-    message = "What is the emailaddress for Jettro Coenradie?"
+    # message = "What is the emailaddress for Jettro Coenradie?"
     # message = "What is the contact information for Jettro Coenradie?"
+    message = "Do you have the email address for Jettro Coenradie"
     phone_number_response = run_conversation(message_content=message)
     print(phone_number_response["choices"][0]["message"]["content"])
