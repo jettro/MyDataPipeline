@@ -48,7 +48,7 @@ def store_images(client: WeaviateClient) -> None:
                 run_logging.info("Stored file: %s", file_name)
 
 
-def query(client: WeaviateClient, query_text: str, the_limit: int = 3):
+def query_from_text(client: WeaviateClient, query_text: str, the_limit: int = 3):
     """
     Queries weaviate for available images that match the provided search terms.
     :param client: Client for interacting with Weaviate
@@ -58,10 +58,32 @@ def query(client: WeaviateClient, query_text: str, the_limit: int = 3):
     """
     run_logging.info("Executing the query '%s'", query_text)
     near_text = {"concepts": [query_text]}
-
+    
     response = (client.client.query
                    .get(WEAVIATE_CLASS, ["filename"])
                    .with_near_text(near_text)
+                   .with_limit(the_limit)
+                   .with_additional(properties=["certainty", "distance"])
+                   .do())
+    if response["data"]["Get"]["Toys"]:
+        found_picts = response["data"]["Get"]["Toys"]
+        return [{"filename": pict["filename"], "certainty": pict["_additional"]["certainty"]} for pict in found_picts]
+
+    return []
+
+def query_similar_images(client: WeaviateClient, query_text: str, the_limit: int = 3):
+    """
+    Queries weaviate for available images that match the provided search terms.
+    :param client: Client for interacting with Weaviate
+    :param query_text: Provided image for matching similar images
+    :param the_limit: Number of images to return, defaults to 3
+    :return: List of objects with properties filename and certainty
+    """
+    run_logging.info("Executing the query '%s'", query_text)
+    sourceImage = { "image": query_text}
+    response = (client.client.query
+                   .get(WEAVIATE_CLASS, ["filename"])
+                   .with_near_image(sourceImage, encode=False)
                    .with_limit(the_limit)
                    .with_additional(properties=["certainty", "distance"])
                    .do())
@@ -91,6 +113,15 @@ def create_weaviate_client(url: str = None):
     """
     return WeaviateClient(overrule_weaviate_url=url)
 
+def print_results(cols, picts):
+    for col, picture in zip(cols, picts):
+        filename = picture["filename"]
+        certainty = picture["certainty"]
+        with col.container():
+            col.image(image="./data_sources/images/" + filename,
+                        caption=filename,
+                        width=200)
+            col.write(f"certainty: {'{:.5f}'.format(certainty)}")
 
 if __name__ == '__main__':
     weaviate_client = create_weaviate_client(url="http://localhost:8080")
@@ -106,19 +137,22 @@ if __name__ == '__main__':
     n_picts = 6
 
     n_rows = int(1 + n_picts // n_cols)
+
     the_query = st.text_input('describe toy in one or a few words')
+    uploaded_file = st.file_uploader(label='Upload file :sunglasses:', type=['png','jpg'])
+
     rows = [st.columns(n_cols) for _ in range(n_rows)]
     cols = [column for row in rows for column in row]
 
     # Execute the query if there is text in the query box
-    if the_query:
-        picts = query(client=weaviate_client, query_text=the_query, the_limit=n_picts)
+    if uploaded_file:
+        the_query=''
+        img_str = base64.b64encode(uploaded_file.getvalue()).decode()
+        picts = query_similar_images(client=weaviate_client, query_text=img_str, the_limit=n_picts)
+        st.sidebar.image(image =uploaded_file.getvalue())
+        print_results(cols, picts)
 
-        for col, picture in zip(cols, picts):
-            filename = picture["filename"]
-            certainty = picture["certainty"]
-            with col.container():
-                col.image(image="./data_sources/images/" + filename,
-                          caption=filename,
-                          width=200)
-                col.write(f"certainty: {'{:.5f}'.format(certainty)}")
+    if the_query:
+        img_str=''
+        picts = query_from_text(client=weaviate_client, query_text=the_query, the_limit=n_picts)
+        print_results(cols, picts)
