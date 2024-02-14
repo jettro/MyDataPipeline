@@ -9,9 +9,10 @@ services:
     - '8080'
     - --scheme
     - http
-    image: semitechnologies/weaviate:1.19.11
+    image: semitechnologies/weaviate:1.23.9
     ports:
     - 8080:8080
+    - 50051:50051
     restart: on-failure:0
     environment:
       CLIP_INFERENCE_API: 'http://multi2vec-clip:8080'
