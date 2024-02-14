@@ -12,7 +12,7 @@ load_dotenv()  # take environment variables from .env.
 config.dictConfig(logging_config)  # Load the logging configuration
 
 WEAVIATE_CLASS = "Toys"
-IMG_PATH = "./data_sources/images/"
+IMG_PATH = "./data_sources/logos/"
 
 run_logging = logging.getLogger("runner")  # initialize the main logger
 
@@ -39,7 +39,7 @@ def store_images(client: WeaviateClient) -> None:
     """
     with client.client.batch(batch_size=5) as batch:
         for file_name in os.listdir(IMG_PATH):
-            if file_name.endswith(".jpg"):
+            if file_name.endswith(".jpg") or file_name.endswith(".png"):
                 with open(IMG_PATH + file_name, "rb") as img_file:
                     b64_string = base64.b64encode(img_file.read())
 
@@ -118,7 +118,7 @@ def print_results(cols, picts):
         filename = picture["filename"]
         certainty = picture["certainty"]
         with col.container():
-            col.image(image="./data_sources/images/" + filename,
+            col.image(image=IMG_PATH + filename,
                         caption=filename,
                         width=200)
             col.write(f"certainty: {'{:.5f}'.format(certainty)}")
